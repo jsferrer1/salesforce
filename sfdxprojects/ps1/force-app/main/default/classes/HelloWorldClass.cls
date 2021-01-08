@@ -3,7 +3,7 @@ public class HelloWorldClass {
     public void HelloWorld()
     {
         try {
-            system.debug('Hello World modified');
+            system.debug('Hello World');
         }
         catch(Exception ex)
         {

@@ -1,6 +1,9 @@
 {
-  "orgName": "jerryferrer company",
+  "orgName": "Epic Demo",
   "edition": "Developer",
+  "adminEmail": "jerrysferrer@gmail.com",
+  "description": "scratch org for epic",
+  "hasSampleData": true,
   "features": [],
   "settings": {
     "lightningExperienceSettings": {

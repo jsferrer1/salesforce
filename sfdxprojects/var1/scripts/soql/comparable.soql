@@ -7,3 +7,14 @@ SELECT Id, Name
     AND CloseDate >= LAST_N_DAYS:365
 
     AND Id != :opp.Id
+
+
+SELECT Id, Name, CreatedBy.Id from Opportunity
+
+select id,
+       amount,
+       stageName,
+       CreatedBy.Id,
+       CreatedBy.email,
+       CreatedBy.Position_Start_Date__c
+from Opportunity

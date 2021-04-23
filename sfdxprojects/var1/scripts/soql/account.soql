@@ -4,3 +4,90 @@
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
 SELECT Id, Name FROM Account
+
+SELECT Id, Name, Industry FROM ACCOUNT
+
+select Id from case
+
+select id
+
+select id,
+       name,
+       permissionsViewAllData,
+       permissionsModifyAllData,
+       permissionsAuthorApex
+from Profile
+
+SELECT id, assigneeId, permissionSetId
+from PermissionSetAssignment
+
+select fields(all) from account
+
+select id, firstName, phone from contact
+where (department = 'executive team'
+   or department = 'finance'
+   or department = 'technology')
+and phone != null
+and birthdate < 1995-06-15
+and title like '%vp%'
+// and doNotCall = false
+
+select id, firstName, phone from contact
+where department in ('executive team',
+                     'finance',
+                     'technology')
+and phone != null
+and birthdate < THIS_YEAR
+and title like '%vp%'
+
+SELECT Id, Name
+FROM Account
+where name like 'Enterprise%'
+
+// organizing results
+
+select id, name, amount, stageName
+from Opportunity
+where stageName != 'Closed Lost'
+order by stageName desc, amount desc
+limit 10
+
+select count()
+from Opportunity
+
+group by name
+
+// querying parent data
+
+select id, amount, stageName,
+       Account.Name,
+       Account.Counter__c
+from Opportunity
+
+// quering child data
+
+select id, amount, stageName,
+       (select role, contactId
+        from OpportunityContactRoles)
+from Opportunity
+
+OpportunityContactRoles is the relationshipName
+
+// grouping soql results
+
+select stageName,
+       sum(amount) amount,
+       max(closeDate) closeDate,
+       min(expectedRevenue) revenue,
+       avg(amount) avg,
+       count(id) cnt,
+       avg(Account.annualRevenue) annual
+from Opportunity
+where amount != null
+group by stageName
+
+// sample data
+
+select count() from account
+
+select count() from contact

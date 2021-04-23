@@ -1,0 +1,197 @@
+// overview
+select count() from account
+
+select id,
+       name,
+       industry
+from account
+
+select id,
+       name,
+       industry,
+       createdById,
+       createdDate,
+       lastModifiedById
+from account
+limit 10
+
+select id,
+       name,
+       industry,
+       CreatedBy.Id,
+       createdDate,
+       Createdby.userName
+from account
+limit 10
+
+// practice #1
+
+select id,
+       name,
+       email
+from contact
+
+select id,
+       name,
+       email,
+       createdById,
+       createdDate,
+       lastModifiedById
+from contact
+
+// practice #2
+
+select id,
+       numberOfEmployees
+from account
+where numberOfEmployees > 50
+
+select id,
+       name,
+       numberOfEmployees,
+       annualRevenue
+from account
+where numberOfEmployees > 50
+and annualRevenue >= 100000
+
+// practice #3
+
+select name,
+       title
+from contact
+where title in ('CEO', 'VP')
+
+select name,
+       title
+from contact
+where title in ('CEO', 'VP')
+and accountId != null
+
+// practice #4
+
+select name, birthDate
+from contact
+where birthDate >= 2000-01-01
+and birthDate <= 2000-12-31
+
+select name, birthDate
+from contact
+where calendar_year(birthDate) = 1999
+
+select name, birthDate
+from contact
+where calendar_year(birthDate) = 1999
+and calendar_month(birthDate) != 5
+
+// practice #5
+
+select id,
+       name,
+       title,
+       Account.annualRevenue
+from contact
+where title = 'Sales Manager'
+and Account.annualRevenue > 90000
+
+select id,
+       name,
+       title,
+       Account.annualRevenue,
+       Account.numberOfEmployees,
+       Account.industry
+from contact
+where (title = 'Sales Manager'
+and Account.annualRevenue > 90000)
+or (Account.numberOfEmployees > 75
+and Account.industry = 'Finance')
+
+// practice #6
+
+select email
+from contact
+where email like '%outlook%com'
+
+select email, Account.industry
+from contact
+where email like '%outlook%com'
+or Account.industry = 'Government'
+
+// practice #7
+
+select id,
+       name,
+       title
+from contact
+where title like '%Sales%'
+
+select id,
+       name,
+       title,
+       Account.industry
+from contact
+where title like '%Sales%'
+or (title = 'CEO'
+and Account.industry in ('Technology', 'Finance'))
+
+// practice #8
+
+select name,
+       annualRevenue
+from account
+order by annualRevenue desc
+limit 10
+
+select name,
+       annualRevenue,
+       numberOfEmployees
+from account
+order by annualRevenue desc,
+         numberOfEmployees asc
+limit 10
+
+// practice #9
+
+select name,
+       description,
+       (select name
+        from Contacts)
+from account
+
+select name,
+       description,
+       (select name, email
+        from Contacts
+        where email like '%5%')
+from account
+
+// practice #10
+
+select id,
+       name,
+       (select count()
+        from Contacts)
+from account
+
+select Account.id,
+       count(Id) contact_count
+from contact
+group by Account.id
+
+select Account.id,
+       birthDate,
+       count(Id) contact_count
+from contact
+group by Account.id, birthDate
+
+* correct answers *
+
+select AccountId,
+       count(Id) contact_count
+from contact
+group by AccountId
+
+select AccountId,
+       count(Id) contact_count,
+       max(birthDate) youngest
+from contact
+group by AccountId

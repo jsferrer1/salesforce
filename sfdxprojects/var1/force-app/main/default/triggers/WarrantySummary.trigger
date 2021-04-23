@@ -1,13 +1,19 @@
 trigger WarrantySummary on Case (before insert) {
   String endingStatement = 'Have a nice day!';
   for (Case myCase : Trigger.new) {
-    String purchaseDate = Date.today().format(); // myCase.Product_Purchase_Date__c;
-    String createdDate = DateTime.now().format(); // myCase.CreatedDate.format();
-    Integer warrantyDays = 30; // myCase.Product_Total_Warranty_Days__c.intValue();
-    // percentage = (Date.today() - purchaseDate) / warrantyDays;
-    // Decimal warrantyPercentage = (100 * ((Date.today().daysBetween(Date.today())) / warrantyDays));
-    Decimal warrantyPercentage = 30.00;
-    Boolean hasExtendedWarranty = false; // myCase.Product_Has_Extended_Warranty__c;
+    String purchaseDate = myCase.Product_Purchase_Date__c != null
+      ? myCase.Product_Purchase_Date__c.format()
+      : Date.today().format();
+    String createdDate = Datetime.now().format(); // myCase.CreatedDate.format();
+    Integer warrantyDays = myCase.Product_Total_Warranty_Days__c != null
+      ? myCase.Product_Total_Warranty_Days__c.intValue()
+      : 30;
+    Date pdate = Date.parse(purchaseDate);
+    Decimal warrantyPercentage = (100 * (pdate.daysBetween(Date.today()) / warrantyDays));
+    warrantyPercentage.setScale(2);
+    Boolean hasExtendedWarranty = myCase.Product_Has_Extended_Warranty__c != null
+      ? true
+      : false;
 
     myCase.Description = 'Product purchased on ' + purchaseDate + ''
       + 'and case created on ' + createdDate + '.\n'
@@ -18,6 +24,9 @@ trigger WarrantySummary on Case (before insert) {
       + endingStatement;
   }
 }
+
+    // percentage = (Date.today() - purchaseDate) / warrantyDays;
+    // Decimal warrantyPercentage = 30.00;
 
     /*
     Product purchased on <<Purchase Date>> and case created on <<Case Created Date>>.

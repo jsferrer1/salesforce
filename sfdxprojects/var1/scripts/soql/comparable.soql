@@ -1,0 +1,9 @@
+SELECT Id, Name
+  FROM Opportunity
+  WHERE Amount >= 90000
+    AND Amount <= 110000
+    AND Account.Industry = 'Technology'
+    AND StageName = 'Closed Won'
+    AND CloseDate >= LAST_N_DAYS:365
+
+    AND Id != :opp.Id

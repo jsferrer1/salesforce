@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>The customer Contact record associated with this reward balance.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The customer Contact record associated with this reward balance.</inlineHelpText>
+    <label>Customer Contact</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Reward Balances</relationshipLabel>
+    <relationshipName>Reward_Balances</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

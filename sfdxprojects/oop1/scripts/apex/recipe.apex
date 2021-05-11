@@ -1,3 +1,4 @@
+system.debug('MAX_TEMP: ' + Recipe.MAX_TEMP);
 List<Recipe> recipes = new List<Recipe>();
 
 Recipe newRecipe;

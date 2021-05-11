@@ -1,5 +1,11 @@
 List<Recipe> recipes = new List<Recipe>();
-recipes.add(new Recipe('tinola'));
+
+Recipe newRecipe;
+newRecipe = new Recipe('tinola', 'butcher the chicken');
+newRecipe.addIngredient('sayote', '3 lbs');
+newRecipe.addIngredient('garlic', '5 cloves');
+recipes.add(newRecipe);
+
 recipes.add(new Recipe('sinigang', 'catch the fish'));
 
 for (Recipe r : recipes) {

@@ -4,9 +4,6 @@ recipes.add(new Recipe('sinigang', 'catch the fish'));
 
 for (Recipe r : recipes) {
   r.printDescription();
-  if (r.hasInstructions) {
-    system.debug('... has instructions');
-  }
 }
 
 // public class Recipe {

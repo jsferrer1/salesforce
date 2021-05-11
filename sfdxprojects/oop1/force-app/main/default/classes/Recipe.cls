@@ -1,6 +1,6 @@
 public class Recipe {
-  string name;
-  string instructions;
+  private string name;
+  private string instructions;
 
   public final integer MAX_TEMP = 550;
 
@@ -21,7 +21,7 @@ public class Recipe {
    * properties (getters/setters)
    */
 
-  public boolean hasInstructions {
+  private boolean hasInstructions {
     get {
       return string.isNotEmpty(instructions);
     }
@@ -32,7 +32,11 @@ public class Recipe {
    */
 
   public void printDescription() {
-    system.debug('name: ' + name + ', instructions: ' + instructions);
+    if (hasInstructions) {
+        system.debug('name: ' + name + ', instructions: ' + instructions);
+    } else {
+        system.debug('name: ' + name);
+    }
   }
 
   public void printDescription(string prefix) {

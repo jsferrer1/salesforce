@@ -1,4 +1,4 @@
-class Recipe {
+public class Recipe {
   string name;
   string instructions;
 

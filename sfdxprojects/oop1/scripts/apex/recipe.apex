@@ -1,62 +1,11 @@
-system.debug('MAX_TEMP: ' + Recipe.MAX_TEMP);
-List<Recipe> recipes = new List<Recipe>();
+List<Recipe> allRecipes = new List<Recipe>();
+allRecipes.add(new Recipe('gazpacho', 'fry garlic and onions, add tomatoes, cook 15 mins, cool'));
+allRecipes.add(new Recipe('spaghetti marinara', 'cook spaghetti, serve with tomato sauce and red pepper'));
+allRecipes.add(new Recipe('shakshuka', 'set eggs in a pan of tomato sauce and vegetables'));
+allRecipes.add(new DrinkRecipe('vegetable juice', 'juice tomato, celery, cucumber, carrot; add salt'));
 
-Recipe newRecipe;
-newRecipe = new Recipe('tinola', 'butcher the chicken');
-newRecipe.addIngredient('sayote', '3 lbs');
-newRecipe.addIngredient('garlic', '5 cloves');
-recipes.add(newRecipe);
+allRecipes.sort();
 
-recipes.add(new Recipe('sinigang', 'catch the fish'));
-
-for (Recipe r : recipes) {
-  r.printDescription();
+for(Recipe r : allRecipes) {
+    r.printDescription();
 }
-
-// public class Recipe {
-//   string name;
-//   string instructions;
-
-//   public final integer MAX_TEMP = 550;
-
-//   /**
-//    * constructors
-//    */
-
-//   Recipe(string pName) {
-//     this(pName, '');
-//   }
-
-//   Recipe(string pName, string pInstructions) {
-//     name = pName;
-//     instructions = pInstructions;
-//   }
-
-//   /**
-//    * properties (getters/setters)
-//    */
-
-//   public boolean hasInstructions {
-//     get {
-//       return string.isNotEmpty(instructions);
-//     }
-//   }
-
-//   /**
-//    * methods
-//    */
-
-//   void printDescription() {
-//     system.debug('name: ' + name + ', instructions: ' + instructions);
-//   }
-
-//   void printDescription(string prefix) {
-//     system.debug(prefix + 'name: ' + name + ', instructions: ' + instructions);
-//   }
-// }
-
-// string name = 'gazpacho';
-// string instructions = 'fry garlic and onions, add tomatoes, cook 15 mins, cool';
-// Recipe recipe1 = new Recipe(name, instructions);
-// recipe1.printDescription();
-

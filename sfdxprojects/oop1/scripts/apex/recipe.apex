@@ -1,11 +1,18 @@
-List<Recipe> allRecipes = new List<Recipe>();
-allRecipes.add(new Recipe('gazpacho', 'fry garlic and onions, add tomatoes, cook 15 mins, cool'));
-allRecipes.add(new Recipe('spaghetti marinara', 'cook spaghetti, serve with tomato sauce and red pepper'));
-allRecipes.add(new Recipe('shakshuka', 'set eggs in a pan of tomato sauce and vegetables'));
-allRecipes.add(new DrinkRecipe('vegetable juice', 'juice tomato, celery, cucumber, carrot; add salt'));
+// Recipe recip = new Recipe('sundried tomatoes', 'set tomatoes in the sun for 5 very long days');
+// DrinkRecipe drink = (DrinkRecipe) recip;
 
-allRecipes.sort();
 
-for(Recipe r : allRecipes) {
-    r.printDescription();
+try {
+    Recipe recip = new Recipe('sundried tomatoes', 'set tomatoes in the sun for 5 very long days');
+    DrinkRecipe drink = (DrinkRecipe) recip;
+}
+catch( Recipe.RecipeException e ) {
+    system.debug('message: ' + e.getMessage());
+    system.debug('cause: ' + e.getCause());
+    system.debug('stacktrace: ' + e.getStackTraceString());
+}
+catch( System.Exception e ) {
+    system.debug('message: ' + e.getMessage());
+    system.debug('cause: ' + e.getCause());
+    system.debug('stacktrace: ' + e.getStackTraceString());
 }

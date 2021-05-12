@@ -7,7 +7,7 @@ public class AllRecipesTest {
         for( User u : lstUsers ) {
             system.runAs(u) {
             	system.debug(u.Name);
-	        	AllRecipes.printAllRecipes();
+	        	CallingContext.printAllRecipes();
         	}
         }
     }

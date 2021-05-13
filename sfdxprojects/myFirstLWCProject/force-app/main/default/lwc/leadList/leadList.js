@@ -1,5 +1,6 @@
 import { LightningElement, wire, track} from 'lwc';
 import searchLeads from '@salesforce/apex/LeadSearchController.searchLeads';
+import { NavigationMixin } from 'lightning/navigation';
 
 /** The delay used when debouncing event handlers before a method call. */
 // This code was copied directly from the trailheadapps/lwc-recipes GitHub repo
@@ -36,7 +37,7 @@ const COLS = [
     }
 ];
 
-export default class LeadList extends (LightningElement) {
+export default class LeadList extends NavigationMixin(LightningElement) {
     @track leads = [];
     @track searchTerm;
     @track cols = COLS;
@@ -68,6 +69,18 @@ export default class LeadList extends (LightningElement) {
             this.error = error;
             this.leads = undefined;
         }
+    }
+
+    handleRowAction(event) {
+        const row = event.detail.row;
+        this.record = row;
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: row.Id,
+                actionName: 'view',
+            },
+        });
     }
 
 }

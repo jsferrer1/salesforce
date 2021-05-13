@@ -2,6 +2,16 @@ public with sharing class RecipeTriggers {
 
     private static Set<Id> setUpdating = new Set<Id>();
 
+    public static void processBeforeInsert(Map<Id, Recipe__c> mapUpdatedRecipes) {
+        // check for duplicates
+        // check for errors
+        // check price
+    }
+
+    public static void processBeforeUpdate(Map<Id, Recipe__c> mapUpdatedRecipes) {
+        checkDuplicates(mapUpdatedRecipes);
+    }
+
     public static void checkDuplicates(Map<Id, Recipe__c> mapUpdatedRecipes) {
 
         for( Recipe__c r: mapUpdatedRecipes.values() ) {

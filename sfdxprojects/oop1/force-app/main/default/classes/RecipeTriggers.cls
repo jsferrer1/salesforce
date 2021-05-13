@@ -1,19 +1,25 @@
 public with sharing class RecipeTriggers {
 
-    public static void checkDuplicates(List<Recipe__c> lstNewRecipes) {
+    private static boolean bInTrigger = false;
 
-        List<string> lstNames = new List<string>();
-        for( Recipe__c r: lstNewRecipes ) {
-            lstNames.add(r.Name);
+    public static void checkDuplicates(Map<Id, Recipe__c> mapUpdatedRecipes) {
+        if( bInTrigger )
+            return;
+
+        bInTrigger = true;
+
+        for( Recipe__c r: mapUpdatedRecipes.values() ) {
             system.debug('...trigger on: ' + r.Name);
         }
 
-        List<Recipe__c> lstRecipesToUpdate = [SELECT Id, Name from Recipe__c WHERE Name IN :lstNames];
+        Set<Id> oldRecords = mapUpdatedRecipes.keySet();
+        List<Recipe__c> lstRecipesToUpdate = [SELECT Id, Name from Recipe__c WHERE Id NOT IN :oldRecords];
 
         for(Recipe__c r : lstRecipesToUpdate) {
-            system.debug('...potential duplicate: ' + r.Name);
+            system.debug('...need to check: ' + r.Name);
             r.Status__c = 'potential duplicate';
         }
         update lstRecipesToUpdate;
+        bInTrigger = false;
     }
 }

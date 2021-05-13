@@ -1,9 +1,40 @@
-import { LightningElement, track} from 'lwc';
+import { LightningElement, wire, track} from 'lwc';
+import searchLeads from '@salesforce/apex/LeadSearchController.searchLeads';
+
+const COLS = [
+    {
+        label: 'Name',
+        fieldName: 'Name',
+        type: 'text'
+    },
+    {
+        label: 'Phone',
+        fieldName: 'Phone',
+        type: 'phone'
+    },
+    {
+        label: 'Website',
+        fieldName: 'Website',
+        type: 'url'
+    },
+    {
+        label: 'View',
+        type: 'button-icon',
+        initialWidth: 75,
+        typeAttributes: {
+            title: 'View Details',
+            alternativeText: 'View Details',
+            iconName: 'action:info'
+
+        }
+    }
+];
 
 export default class LeadList extends (LightningElement) {
-    @track leads =[];
+    @track leads = [];
     @track searchTerm;
-
+    @track cols = COLS;
+    @track error;
 
     handleSearchTermChange(event) {
         this.searchTerm = event.target.value;
@@ -11,39 +42,18 @@ export default class LeadList extends (LightningElement) {
         this.dispatchEvent(selectedEvent);
     }
 
-
-    leads = [
-        {
-            "Id": "LeadRef1",
-            "Name": "Bertha Boxer",
-            "Title": "Director of Vendor Relations",
-            "Company": "Farmers Coop. of Florida",
-            "Street": "321 Westcott Building",
-            "City": "Tallahassee",
-            "State": "FL",
-            "PostalCode": "32306"
-        },
-        {
-            "Id": "LeadRef2",
-            "Name": "Phyllis Cotton",
-            "Title": "CFO",
-            "Company": "Chamber of Commerce",
-            "Street": "300 E Park Ave",
-            "City": "Tallahassee",
-            "State": "FL",
-            "PostalCode": "32301"
-        },
-        {
-            "Id": "LeadRef3",
-            "Name": "Jeff Glimpse",
-            "Title": "SVP, Procurement",
-            "Company": "Tallahassee Taxes",
-            "Street": "1327 Colorado St",
-            "City": "Tallahassee",
-            "State": "FL",
-            "PostalCode": "32304"
+    @wire(searchLeads,   {
+        searchTerm: '$searchTerm'
+    })
+    loadLeads(data) {
+        if (data) {
+            this.leads = data;
+            this.error = undefined;
+        } else if (error) {
+            //handle error
+            this.error = error;
+            this.leads = undefined;
         }
-    ];
-
+     }
 
 }

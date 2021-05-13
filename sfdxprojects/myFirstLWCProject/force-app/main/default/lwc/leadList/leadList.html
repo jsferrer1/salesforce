@@ -12,11 +12,16 @@
           <h3>Leads for {searchTerm}</h3>
       </div>
       <div class="slds-m-around_small">
-          <template if:true={leads}>
-              <template for:each={leads} for:item="lead">
-                  <c-lead-list-item key={lead.Id} lead={lead} ></c-lead-list-item>
-              </template>
-          </template>
+        <lightning-datatable
+                key-field="id"
+                data={leads}
+                columns={cols}
+                onrowaction={handleRowAction}
+                hide-checkbox-column = "true">
+        </lightning-datatable>
       </div>
+      <template if:true={error}>
+        The following error was encountered: {error}
+      </template>
   </lightning-card>
 </template>

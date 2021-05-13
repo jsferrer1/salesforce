@@ -1,6 +1,12 @@
 import { LightningElement, wire, track} from 'lwc';
 import searchLeads from '@salesforce/apex/LeadSearchController.searchLeads';
 
+/** The delay used when debouncing event handlers before a method call. */
+// This code was copied directly from the trailheadapps/lwc-recipes GitHub repo
+const DELAY = 350;
+
+
+// It is a general convention to capitalize constants
 const COLS = [
     {
         label: 'Name',
@@ -8,14 +14,14 @@ const COLS = [
         type: 'text'
     },
     {
-        label: 'Phone',
-        fieldName: 'Phone',
-        type: 'phone'
+        label: 'Title',
+        fieldName: 'Title',
+        type: 'text'
     },
     {
-        label: 'Website',
-        fieldName: 'Website',
-        type: 'url'
+        label: 'Company',
+        fieldName: 'Company',
+        type: 'text'
     },
     {
         label: 'View',
@@ -38,22 +44,30 @@ export default class LeadList extends (LightningElement) {
 
     handleSearchTermChange(event) {
         this.searchTerm = event.target.value;
-        const selectedEvent = new CustomEvent('newsearch', {detail: this.searchTerm});
-        this.dispatchEvent(selectedEvent);
+        if (this.leads) {
+            const selectedEvent = new CustomEvent('newsearch', {detail: this.searchTerm});
+            window.clearTimeout(this.delayTimeout);
+            // eslint-disable-next-line @lwc/lwc/no-async-operation
+            this.delayTimeout = setTimeout(() => {
+                this.dispatchEvent(selectedEvent);
+            }, DELAY);
+        }
+
     }
 
-    @wire(searchLeads,   {
+    @wire(searchLeads, {
         searchTerm: '$searchTerm'
     })
-    loadLeads(data) {
+    loadLeads({ error, data }) {
         if (data) {
             this.leads = data;
+            const selectedEvent = new CustomEvent('searchcomplete', {detail: this.searchTerm});
+            this.dispatchEvent(selectedEvent);
             this.error = undefined;
         } else if (error) {
-            //handle error
             this.error = error;
             this.leads = undefined;
         }
-     }
+    }
 
 }

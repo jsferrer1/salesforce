@@ -13,15 +13,15 @@
       </div>
       <div class="slds-m-around_small">
         <lightning-datatable
-                key-field="id"
-                data={leads}
-                columns={cols}
-                onrowaction={handleRowAction}
-                hide-checkbox-column = "true">
+            key-field="id"
+            data={leads}
+            columns={cols}
+            onrowaction={handleRowAction}
+            hide-checkbox-column = "true">
         </lightning-datatable>
-      </div>
-      <template if:true={error}>
-        The following error was encountered: {error}
-      </template>
-  </lightning-card>
+        <template if:true={error}>
+            Error encountered {error}
+        </template>
+    </div>
+    </lightning-card>
 </template>
